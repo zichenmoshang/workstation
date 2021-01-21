@@ -23,7 +23,7 @@
             注册
           </button>
         </div>
-        <img src="~images/login.svg" class="image" alt="" />
+        <img src="~@images/login.svg" class="image" alt="" />
       </div>
       <div class="panel right-panel">
         <div class="content">
@@ -33,7 +33,7 @@
             登录
           </button>
         </div>
-        <img src="~images/register.svg" class="image" alt="" />
+        <img src="~@images/register.svg" class="image" alt="" />
       </div>
     </div>
   </div>

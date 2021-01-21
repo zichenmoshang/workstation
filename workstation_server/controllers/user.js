@@ -19,12 +19,18 @@ class user {
     if (!userinfo) {
       return (ctx.body = reback.re(-1, "用户名不存在", []));
     }
+    userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
+    userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
     // 验证密码 && 生成token并下发
     if (md5(password) === userinfo.user_password) {
       delete userinfo.dataValues.user_password;
       let data = {
         token: "",
-        user_realname: userinfo.user_realname,
+        user: userinfo,
       };
       data.token = jwt.sign(
         {
@@ -60,8 +66,7 @@ class user {
     userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
       .utcOffset(8)
       .format("YYYY-MM-DD HH:mm:ss");
-    // 验证密码 && 生成token并下发
-    ctx.body = reback.re(1, "登录成功", userinfo);
+    ctx.body = reback.re(1, "获取信息成功", userinfo);
   }
 
   /**

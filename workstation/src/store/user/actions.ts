@@ -3,14 +3,13 @@ import { ActionTree } from 'vuex'
 import { UserStateTypes, IRootState } from './types'
 import UserApi from "@/api/userApi"
 
-
-
 export const actions: ActionTree<UserStateTypes, IRootState> = {
     ["LOGIN"]({ commit }, userInfo: any) {
         return new Promise<void>((resolve, reject) => {
             UserApi.userLogin(userInfo).then(res => {
                 console.log("store", res);
                 commit("SET_TOKEN", res.token)
+                commit("SET_USERINFO", JSON.stringify(res.user))
                 resolve()
             }).catch(e => {
                 reject(e)

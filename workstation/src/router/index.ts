@@ -29,16 +29,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (store.state.user.token) {
-      store.commit("ADD_PROCESS", {
-          label: to.path === "/" ? "首页" : (to.name as string),
-          value: to.path
-      })
-  } else {
-      if (!ignore.token.some((e) => to.path.includes(e))) {
-          return next("/login");
-      }
-  }
+  // if (store.state.user.token) {
+  //     store.commit("ADD_PROCESS", {
+  //         label: to.path === "/" ? "首页" : (to.name as string),
+  //         value: to.path
+  //     })
+  // } else {
+  //     if (!ignore.token.some((e) => to.path.includes(e))) {
+  //         return next("/login");
+  //     }
+  // }
   next()
 })
 

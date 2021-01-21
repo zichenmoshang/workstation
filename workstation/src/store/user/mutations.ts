@@ -1,29 +1,35 @@
 import { MutationTree } from 'vuex'
 import { UserStateTypes, UserMutationsTypes } from './types'
-import store from '@/utils/store'
 
 export const mutations: MutationTree<UserStateTypes> & UserMutationsTypes = {
-    ["SET_TOKEN"](state: UserStateTypes, { token }: any) {
+    ["SET_TOKEN"](state: UserStateTypes, token: any) {
         state.token = token
-        store.set("token", token);
+        console.log(token)
+        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
     },
     ["SET_USERINFO"](state: UserStateTypes, payload: any) {
         state.userInfo = payload;
-        store.set("userInfo", payload);
+        localStorage.setItem("userInfo", payload);
+        sessionStorage.setItem("userInfo", payload);
     },
     ["CLEAR_TOKEN"](state: UserStateTypes) {
         state.token = null;
         state.userInfo.username = null;
         state.userInfo.userId = null;
-        store.remove("token");
-        store.remove("username");
-        store.remove("userId");
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("userId");
     },
     ["CLEAR_USER"](state: UserStateTypes) {
         state.userInfo = {
             userId: null,
             username: null,
         };
-        store.remove("userInfo");
+        localStorage.removeItem("userInfo");
+        sessionStorage.removeItem("userInfo");
     }
 }

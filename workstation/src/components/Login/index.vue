@@ -39,7 +39,7 @@
 <script lang="ts">
 import { ref, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { store } from "@/store";
+import { store } from "../../store/index";
 import { ElMessage } from "element-plus";
 export default {
   props: {
