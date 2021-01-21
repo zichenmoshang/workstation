@@ -7,7 +7,6 @@ const reback = require("../utils/reback");
 class user {
   /**
    * 登陆
-   * @param {*} ctx 
    */
   static async login(ctx) {
     const { username, password } = ctx.request.body;
@@ -18,33 +17,51 @@ class user {
       },
     });
     if (!userinfo) {
-      return ctx.body = reback.re(-1, "用户名不存在", [])
+      return (ctx.body = reback.re(-1, "用户名不存在", []));
     }
-    userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
-      .utcOffset(8)
-      .format("YYYY-MM-DD HH:mm:ss");
-      userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
-      .utcOffset(8)
-      .format("YYYY-MM-DD HH:mm:ss");
-      // 验证密码 && 生成token并下发
+    // 验证密码 && 生成token并下发
     if (md5(password) === userinfo.user_password) {
-      delete userinfo.dataValues.user_password
+      delete userinfo.dataValues.user_password;
       let data = {
         token: "",
-        userinfo: userinfo
-      }
+        user_realname: userinfo.user_realname,
+      };
       data.token = jwt.sign(
         {
           id: userinfo.user_id,
           // 设置 token 过期时间
-          exp: Math.floor(Date.now() / 1000) + 60 * 60
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
         },
         "wangye's token"
-      )
-      ctx.body = reback.re(1, "登录成功", data)
+      );
+      ctx.body = reback.re(1, "登录成功", data);
     } else {
-      ctx.body = reback.re(0, "登录失败", [])
+      ctx.body = reback.re(0, "登录失败", []);
     }
+  }
+
+  /**
+   * 获取用户信息
+   */
+  static async getinfo(ctx) {
+    const { user_id } = ctx.request.body;
+    // 验证用户是否存在
+    const userinfo = await User.findOne({
+      where: {
+        user_id: user_id,
+      },
+    });
+    if (!userinfo) {
+      return (ctx.body = reback.re(-1, "用户名不存在", []));
+    }
+    userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
+    userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
+    // 验证密码 && 生成token并下发
+    ctx.body = reback.re(1, "登录成功", userinfo);
   }
 
   /**

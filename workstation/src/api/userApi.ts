@@ -32,7 +32,7 @@ class User extends baseService {
 
 
   // 获取用户信息
-  getUserInfo() {
+  getInfo() {
     return this.getReq({
       url: "/user/getinfo"
     })
