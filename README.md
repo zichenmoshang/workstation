@@ -14,4 +14,4 @@
 |:----:|:----:|:----:|:----:|:----:|:----:|
 | 01 | 注册 | "/user/register" | post | {<br>token: string;<br>user_id: string;<br>} | √ |
 | 02 | 登陆 | "/user/login" | post | {<br>token: string;<br>user_id: string;<br>} | √ |
-| 03 | 获取用户信息 | "/user/getinfo" | post | {<br>token: string;<br>user_id: string;<br>} | √ |
+| 03 | 获取用户信息 | "/user/getinfo" | post | {<br>user_username: string;<br>user_realname: string;<br>user_avatar: string;<br>user_unit: string;<br>user_department: string;<br>} | √ |
