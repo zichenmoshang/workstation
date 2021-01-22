@@ -4,9 +4,12 @@ import { UserStateTypes, UserMutationsTypes } from './types'
 export const mutations: MutationTree<UserStateTypes> & UserMutationsTypes = {
     ["SET_TOKEN"](state: UserStateTypes, token: any) {
         state.token = token
-        console.log(token)
         localStorage.setItem("token", token);
         sessionStorage.setItem("token", token);
+    },
+    ["SET_USERID"](state: UserStateTypes, user_id: any) {
+        localStorage.setItem("user_id", user_id);
+        sessionStorage.setItem("user_id", user_id);
     },
     ["SET_USERINFO"](state: UserStateTypes, payload: any) {
         state.userInfo = payload;

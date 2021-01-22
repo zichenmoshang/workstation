@@ -31,7 +31,7 @@ class middleware {
    * @memberof middleware
    */
   static async check_authority(ctx, next) {
-    if (ctx.originalUrl != "/user/login") {
+    if (!ctx.originalUrl.startsWith("/user")) {
       let user_id = ctx.method == "GET" ? ctx.query.user_id : ctx.request.body.user_id;
       let user = await User.findOne({
         where: {

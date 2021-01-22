@@ -1,13 +1,5 @@
 import baseService from "@/utils/baseService";
 
-
-// export function register(ctx: any, registerUser: any) {
-//   return ctx.$axios.post("/api/v1", registerUser)
-// };
-// export function login(ctx: any, loginUser: any) {
-//   return ctx.$axios.post("http://localhost:2326/user/login", loginUser)
-// }
-
 export interface UserProps {
   username: string;
   password: string;
@@ -16,10 +8,30 @@ export interface UserProps {
 }
 
 class User extends baseService {
-  // 登录
+  /**
+   * 登录
+   */
   userLogin(data: UserProps) {
     return this.postReq({
       url: "/user/login",
+      data
+    })
+  }
+  /**
+   * 获取用户信息
+   */
+  getInfo(data: any) {
+    return this.postReq({
+      url: "/user/getinfo",
+      data
+    })
+  }
+  /**
+   * 注册
+   */
+  register(data: any) {
+    return this.postReq({
+      url: "/user/register",
       data
     })
   }
@@ -28,14 +40,6 @@ class User extends baseService {
     return this.postReq({
       url: "/user/logout",
     });
-  }
-
-
-  // 获取用户信息
-  getInfo() {
-    return this.getReq({
-      url: "/user/getinfo"
-    })
   }
 }
 

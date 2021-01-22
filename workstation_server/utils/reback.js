@@ -1,6 +1,6 @@
 class reback {
-  static re(code, msg = "", data = []) {
-    return { code, msg, data };
+  static re(code, data = []) {
+    return { code, data };
   }
 }
 

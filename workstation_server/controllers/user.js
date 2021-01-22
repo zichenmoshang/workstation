@@ -30,7 +30,7 @@ class user {
       delete userinfo.dataValues.user_password;
       let data = {
         token: "",
-        user: userinfo,
+        user_id: userinfo.user_id,
       };
       data.token = jwt.sign(
         {
@@ -40,12 +40,11 @@ class user {
         },
         "wangye's token"
       );
-      ctx.body = reback.re(1, "登录成功", data);
+      ctx.body = reback.re(1, data);
     } else {
-      ctx.body = reback.re(0, "登录失败", []);
+      ctx.body = reback.re(0, []);
     }
   }
-
   /**
    * 获取用户信息
    */
@@ -58,7 +57,7 @@ class user {
       },
     });
     if (!userinfo) {
-      return (ctx.body = reback.re(-1, "用户名不存在", []));
+      return (ctx.body = reback.re(-1, []));
     }
     userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
       .utcOffset(8)
@@ -66,7 +65,41 @@ class user {
     userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
       .utcOffset(8)
       .format("YYYY-MM-DD HH:mm:ss");
-    ctx.body = reback.re(1, "获取信息成功", userinfo);
+    delete userinfo.dataValues.user_password;
+    ctx.body = reback.re(1, userinfo);
+  }
+  /**
+   * 获取用户信息
+   */
+  static async register(ctx) {
+    const register_info = ctx.request.body;
+    const registeruser = await User.create({
+      user_username: register_info.username || "",
+      user_password: register_info.password || "",
+      user_realname: register_info.realname || "",
+      user_avatar: register_info.avatar || "",
+      user_unit: register_info.unit || "",
+      user_department: register_info.department || "",
+      user_permission: "",
+    });
+    if (!registeruser) {
+      return (ctx.body = reback.re(0, []));
+    }
+    delete registeruser.dataValues.user_password;
+    delete registeruser.dataValues.user_permission;
+      let data = {
+        token: "",
+        user_id: registeruser.dataValues.user_id,
+      };
+      data.token = jwt.sign(
+        {
+          id: registeruser.dataValues.user_id,
+          // 设置 token 过期时间
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+        },
+        "wangye's token"
+      );
+      ctx.body = reback.re(1, data);
   }
 
   /**

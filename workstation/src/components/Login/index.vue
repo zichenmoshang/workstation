@@ -1,114 +1,96 @@
 <template>
-  <el-form
-    ref="loginForm"
-    :model="loginUser"
-    :rules="rules"
-    label-width="100px"
+  <a-form
     class="loginForm sign-in-form"
+    layout="horizontal"
+    v-bind="formItemLayout"
+    :model="loginUser"
+    @submit="handleLogin"
+    @submit.native.prevent
   >
-    <el-form-item label="警号" prop="username">
-      <el-input
-        v-model="loginUser.username"
+    <a-form-item label="警号">
+      <a-input
+        v-model:value="loginUser.username"
+        size="large"
+        defaultValue="admin."
+        allow-clear
         placeholder="输入警号..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="密码" prop="password">
-      <el-input
-        v-model="loginUser.password"
-        type="password"
-        placeholder="输入密码..."
-      ></el-input>
-    </el-form-item>
-
-    <el-form-item>
-      <el-button
-        @click="handleLogin('loginForm')"
-        type="primary"
-        class="submit-btn"
-        >提交</el-button
       >
-    </el-form-item>
-
-    <!-- 找回密码 -->
-    <div class="tiparea">
-      <p>忘记密码？联系 <a>网安支队</a></p>
-    </div>
-  </el-form>
+        <template #prefix
+          ><UserOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item label="密码">
+      <a-input-password
+        v-model:value="loginUser.password"
+        size="large"
+        defaultValue="123456"
+        allow-clear
+        placeholder="输入密码..."
+        pressEnter="handleLogin"
+      >
+        <template #prefix
+          ><LockOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input-password>
+    </a-form-item>
+    <a-form-item :wrapper-col="formItemLayout.buttonCol">
+      <a-button
+        class="submit-btn"
+        type="primary"
+        block
+        html-type="submit"
+        :disabled="
+          loginUser.username.length != 6 || loginUser.password.length < 6
+        "
+      >
+        立即登录
+      </a-button>
+    </a-form-item>
+  </a-form>
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { store } from "../../store/index";
-import { ElMessage } from "element-plus";
 export default {
   props: {
     loginUser: {
       type: Object,
       required: true
-    },
-    rules: {
-      type: Object,
-      required: true
     }
   },
+  components: {
+    UserOutlined,
+    LockOutlined
+  },
   setup(props: any) {
-    // @ts-ignore
-    const { ctx } = getCurrentInstance();
     const router = useRouter();
-    // 触发登录方法
-    const handleLogin = (formName: string) => {
-      ctx.$refs[formName].validate(async (valid: boolean) => {
-        if (valid) {
-          // login(ctx, props.loginUser)
-          //   .then((res: any) => {
-          //     console.log(res);
-          //     if (res.status === 1) {
-          //       ElMessage.success(res.msg);
-          //       const token = res.data.token;
-          //       console.log(token)
-          //       localStorage.setItem("token", token);
-          //       // router.push('/');
-          //     } else {
-          //       ElMessage.error(res.msg);
-          //     }
-          //   })
-          //   .catch((err: any) => {
-          //     console.log(err);
-          //   });
-          // alert("注册提交!");
-          await store.dispatch("LOGIN", props.loginUser)
-          // await store.dispatch("USERINFO")
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+    const formItemLayout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 18 },
+      buttonCol: { span: 18, offset: 4 }
     };
-
-    return { handleLogin };
+    const handleLogin = async () => {
+      await store.dispatch("LOGIN", props.loginUser);
+      const data = {
+        token: sessionStorage.getItem("token"),
+        user_id: sessionStorage.getItem("user_id")
+      };
+      await store.dispatch("USERINFO", data);
+      await router.push("/");
+    };
+    return { formItemLayout, handleLogin };
   }
 };
 </script>
 <style scoped>
-/* form */
 .loginForm {
   margin-top: 20px;
   background-color: #fff;
   padding: 20px 40px 20px 20px;
   border-radius: 5px;
   box-shadow: 0px 5px 10px #cccc;
-}
-
-.submit-btn {
-  width: 100%;
-}
-.tiparea {
-  text-align: right;
-  font-size: 12px;
-  color: #333;
-}
-.tiparea p a {
-  color: #409eff;
 }
 </style>

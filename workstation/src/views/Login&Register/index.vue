@@ -4,13 +4,9 @@
     <div class="forms-container">
       <div class="signin-signup">
         <!-- 登录 -->
-        <LoginForm :loginUser="loginUser" :rules="rules" />
-
+        <LoginForm :loginUser="loginUser" />
         <!-- 注册 -->
-        <RegisterForm
-          :registerUser="registerUser"
-          :registerRules="registerRules"
-        />
+        <RegisterForm :registerUser="registerUser" />
       </div>
     </div>
     <!-- 左右切换动画 -->
@@ -40,10 +36,9 @@
 </template>
 <script lang="ts">
 import { ref } from "vue";
-import { loginUser, rules } from "@/utils/loginValidators";
-import { registerUser, registerRules } from "@/utils/registerValidators";
-import LoginForm from "@/components/Login/index.vue";
-import RegisterForm from "@/components/Register/index.vue";
+import { loginUser, registerUser } from "./dataValidators";
+import LoginForm from "../../components/Login/index.vue";
+import RegisterForm from "../../components/Register/index.vue";
 export default {
   name: "LoginRegister",
   components: { LoginForm, RegisterForm },
@@ -52,9 +47,7 @@ export default {
     return {
       signUpMode,
       loginUser,
-      rules,
-      registerUser,
-      registerRules
+      registerUser
     };
   }
 };
@@ -67,19 +60,12 @@ export default {
   min-height: 100vh;
   overflow: hidden;
 }
-.forms-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
 .signin-signup {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   left: 75%;
-  width: 44%;
+  width: 35%;
   transition: 1s 0.7s ease-in-out;
   display: grid;
   grid-template-columns: 1fr;

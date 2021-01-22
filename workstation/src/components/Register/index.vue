@@ -1,90 +1,136 @@
 <template>
-  <el-form
-    ref="registerForm"
-    :model="registerUser"
-    :rules="registerRules"
-    label-width="100px"
+  <a-form
     class="registerForm sign-up-form"
+    layout="horizontal"
+    v-bind="formItemLayout"
+    :model="registerUser"
+    @submit="handleRegister('registerForm')"
+    @submit.native.prevent
   >
-    <el-form-item label="警号" prop="username">
-      <el-input
-        v-model="registerUser.username"
+    <a-form-item label="警号">
+      <a-input
+        v-model:value="registerUser.username"
+        size="large"
+        allow-clear
         placeholder="输入警号..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="姓名" prop="realname">
-      <el-input
-        v-model="registerUser.realname"
-        placeholder="输入真实姓名..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="密码" prop="password">
-      <el-input
-        v-model="registerUser.password"
-        type="password"
-        placeholder="输入密码..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="确认密码" prop="password2">
-      <el-input
-        v-model="registerUser.password2"
-        type="password"
-        placeholder="输入确认密码..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item label="选择单位" prop="unit">
-      <el-select v-model="registerUser.unit" placeholder="请选择单位">
-        <el-option label="佳木斯公安处" value="佳木斯公安处"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="所在部门" prop="department">
-      <el-input
-        v-model="registerUser.department"
-        placeholder="输入所在部门..."
-      ></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        @click="handleRegister('registerForm')"
-        type="primary"
-        class="submit-btn"
-        >注册</el-button
       >
-    </el-form-item>
-  </el-form>
+        <template #prefix
+          ><UserOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item label="密码">
+      <a-input-password
+        v-model:value="registerUser.password"
+        size="large"
+        allow-clear
+        placeholder="输入密码..."
+      >
+        <template #prefix
+          ><LockOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input-password>
+    </a-form-item>
+    <a-form-item label="姓名">
+      <a-input
+        v-model:value="registerUser.realname"
+        size="large"
+        allow-clear
+        placeholder="输入姓名..."
+      >
+        <template #prefix
+          ><SolutionOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item label="单位">
+      <a-select
+        v-model:value="registerUser.unit"
+        size="large"
+        allow-clear
+        placeholder="选择单位..."
+      >
+        <a-select-option value="哈尔滨铁路公安局">
+          哈尔滨铁路公安局
+        </a-select-option>
+        <a-select-option value="佳木斯公安处">
+          佳木斯公安处
+        </a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="部门">
+      <a-input
+        v-model:value="registerUser.department"
+        size="large"
+        allow-clear
+        placeholder="输入部门..."
+        pressEnter="handleRegister('registerForm')"
+      >
+        <template #prefix
+          ><SolutionOutlined style="color:rgba(0,0,0,.25)"
+        /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item :wrapper-col="formItemLayout.buttonCol">
+      <a-button
+        class="submit-btn"
+        type="primary"
+        html-type="submit"
+        block
+        :disabled="
+          registerUser.username.length != 6 ||
+            registerUser.password.length < 6 ||
+            registerUser.realname === '' ||
+            registerUser.unit === '' ||
+            registerUser.department === ''
+        "
+      >
+        立即注册
+      </a-button>
+    </a-form-item>
+  </a-form>
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import {
+  UserOutlined,
+  LockOutlined,
+  SolutionOutlined
+} from "@ant-design/icons-vue";
+import { store } from "../../store/index";
 export default {
   props: {
     registerUser: {
       type: Object,
       required: true
-    },
-    registerRules: {
-      type: Object,
-      required: true
     }
   },
+  components: {
+    UserOutlined,
+    LockOutlined,
+    SolutionOutlined
+  },
   setup(props: any) {
-    // @ts-ignore
-    const { ctx } = getCurrentInstance();
     const router = useRouter();
-    const handleRegister = (formName: string) => {
-      ctx.$refs[formName].validate((valid: boolean) => {
-        if (valid) {
-          alert("注册提交!");
-        } else {
-          console.log("注册提交失败!!");
-          return false;
-        }
-      });
+    const formItemLayout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 18 },
+      buttonCol: { span: 18, offset: 4 }
     };
-    return { handleRegister };
+    const handleRegister = async () => {
+      props.registerUser.unit = props.registerUser.unit.key;
+      console.log(props.registerUser);
+      await store.dispatch("REGISTER", props.registerUser);
+      const data = {
+        token: sessionStorage.getItem("token"),
+        user_id: sessionStorage.getItem("user_id")
+      };
+      await store.dispatch("USERINFO", data);
+      // await router.push("/");
+    };
+    return { formItemLayout, handleRegister };
   }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

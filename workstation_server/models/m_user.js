@@ -40,8 +40,7 @@ const User = sequelize.define(
     },
     user_avatar: {
       type: Sequelize.STRING(256),
-      allowNull: false, // 是否允许为NULL
-      defaultValue: "DEFAULT_01", // 默认值
+      allowNull: true, // 是否允许为NULL
       unique: false,
       comment: '用户头像',
     },
@@ -74,15 +73,17 @@ const User = sequelize.define(
   }
 );
 
-//将创建表,如果表已经存在,则不做操作
-// User.sync();
-//将创建表,如果表已经存在,则将其首先删除
+/**
+ * User.sync() - 如果表不存在,则创建该表(如果已经存在,则不执行任何操作)
+ * User.sync({ force: true }) - 将创建表,如果表已经存在,则将其首先删除
+ * User.sync({ alter: true }) - 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
+ */
 User.sync({ force: true }).then(function () {
   return User.create({
-    user_username: "admin",
+    user_username: "admin.",
     user_password: "123456",
     user_realname: "超级管理员",
-    user_avatar: "DEFAULT_01",
+    user_avatar: "",
     user_unit: "佳木斯公安处",
     user_department: "网络安全保卫支队",
     user_permission: "200,201,202",
