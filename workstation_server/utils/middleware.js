@@ -32,10 +32,11 @@ class middleware {
    */
   static async check_authority(ctx, next) {
     if (!ctx.originalUrl.startsWith("/user")) {
-      let user_id = ctx.method == "GET" ? ctx.query.user_id : ctx.request.body.user_id;
+      console.log(ctx)
+      let userId = ctx.method == "GET" ? ctx.query.userId || ctx.params.userId : ctx.request.body.userId;
       let user = await User.findOne({
         where: {
-          user_id: user_id,
+          user_id: userId,
         },
         raw: true,
       });

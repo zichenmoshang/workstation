@@ -1,86 +1,90 @@
 <template>
-  <div>
-    <a-menu
-      v-model:openKeys="openKeys"
-      v-model:selectedKeys="selectedKeys"
-      mode="inline"
-      theme="dark"
-      :inline-collapsed="collapsed"
-    >
-      <a-menu-item key="0">
-        <PieChartOutlined />
-        <span>Option 0</span>
-      </a-menu-item>
-      <a-menu-item key="1">
-        <PieChartOutlined />
-        <span>Option 1</span>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <DesktopOutlined />
-        <span>Option 2</span>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <InboxOutlined />
-        <span>Option 3</span>
-      </a-menu-item>
-      <a-sub-menu key="sub1">
-        <template #title>
-          <span><MailOutlined /><span>Navigation One</span></span>
-        </template>
-        <a-menu-item key="5">Option 5</a-menu-item>
-        <a-menu-item key="6">Option 6</a-menu-item>
-        <a-menu-item key="7">Option 7</a-menu-item>
-        <a-menu-item key="8">Option 8</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="sub2">
-        <template #title>
-          <span><AppstoreOutlined /><span>Navigation Two</span></span>
-        </template>
-        <a-menu-item key="9">Option 9</a-menu-item>
-        <a-menu-item key="10">Option 10</a-menu-item>
-        <a-sub-menu key="sub3" title="Submenu">
-          <a-menu-item key="11">
-            Option 11
-          </a-menu-item>
-          <a-menu-item key="12">
-            Option 12
-          </a-menu-item>
-        </a-sub-menu>
-      </a-sub-menu>
-    </a-menu>
-  </div>
+  <el-aside width="250px">
+    <div class="logo">
+      <span>Work-Station</span>
+    </div>
+    <el-menu background-color="#e9eef3">
+      <el-submenu index="1">
+        <template #title><i class="el-icon-message"></i>导航一</template>
+        <el-menu-item-group>
+          <template #title>分组一</template>
+          <el-menu-item index="1-1">选项1</el-menu-item>
+          <el-menu-item index="1-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="1-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="1-4">
+          <template #title>选项4</template>
+          <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-submenu index="2">
+        <template #title><i class="el-icon-menu"></i>导航二</template>
+        <el-menu-item-group>
+          <template #title>分组一</template>
+          <el-menu-item index="2-1">选项1</el-menu-item>
+          <el-menu-item index="2-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="2-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="2-4">
+          <template #title>选项4</template>
+          <el-menu-item index="2-4-1">选项4-1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-submenu index="3">
+        <template #title><i class="el-icon-setting"></i>导航三</template>
+        <el-menu-item-group>
+          <template #title>分组一</template>
+          <el-menu-item index="3-1">选项1</el-menu-item>
+          <el-menu-item index="3-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="3-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="3-4">
+          <template #title>选项4</template>
+          <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+    </el-menu>
+  </el-aside>
 </template>
 <script>
-import { reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import {
-  PieChartOutlined,
-  MailOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined
-} from "@ant-design/icons-vue";
+import PermissionApi from "@/api/permissionApi"
 export default {
   name: "Aside",
-  components: {
-    PieChartOutlined,
-    MailOutlined,
-    DesktopOutlined,
-    InboxOutlined,
-    AppstoreOutlined
-  },
   setup() {
-    const { options } = useRouter()
-    console.log(options);
-    const data = reactive({
-      selectedKeys: ["1"],
-      openKeys: ["sub1"],
-      preOpenKeys: ["sub1"]
-    });
+    const permissionInfo = async () => {
+      const userId = sessionStorage.getItem("userId")
+      PermissionApi.getPermission(userId)
+        .then(res => {
+          console.log(res)
+          ElMessage.success("登陆成功")
+          resolve()
+        })
+        .catch(e => {
+          ElMessage.error("登陆失败")
+          reject(e)
+        })
+    }
     return {
-      data
-    };
+      permissionInfo
+    }
   }
-};
+}
 </script>
-<style scoped></style>
+<style scoped>
+.el-aside {
+  background-color: #e9eef3;
+}
+.logo {
+  line-height: 60px;
+  text-align: center;
+  font-weight: bold;
+  font-size: x-large;
+  color: #409eff;
+}
+</style>

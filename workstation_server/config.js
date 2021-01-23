@@ -16,7 +16,7 @@ const config = {
 		host: 'localhost', //主机名
 		port: 3306, //端口号，mysql默认3306
 		username: 'root', //账号
-		password: 'wy232519425', //密码
+		password: 'Wy232519425', //密码
 		database: 'workstation', //使用的哪个数据库名
 	},
 }

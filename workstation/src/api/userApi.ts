@@ -1,10 +1,10 @@
-import baseService from "@/utils/baseService";
+import baseService from "@/utils/baseService"
 
 export interface UserProps {
-  username: string;
-  password: string;
-  captchaId: string;
-  verifyCode: string;
+  username: string
+  password: string
+  captchaId: string
+  verifyCode: string
 }
 
 class User extends baseService {
@@ -38,14 +38,15 @@ class User extends baseService {
 
   userLogout() {
     return this.postReq({
-      url: "/user/logout",
-    });
+      url: "/user/logout"
+    })
   }
 }
 
-let instance;
+let instance
 export default (() => {
-  if (instance) return instance;
-  instance = new User();
-  return instance;
-})();
+  // if (instance) return instance
+  // instance = new User()
+  // return instance
+  return instance || new User()
+})()

@@ -19,38 +19,38 @@
             注册
           </button>
         </div>
-        <img src="~@images/login.svg" class="image" alt="" />
+        <img src="@/assets/images/login.svg" class="image" alt="" />
       </div>
       <div class="panel right-panel">
         <div class="content">
-          <h3>以人为镜,可明得失, 以代码为镜,可通逻辑!</h3>
+          <h3>以人为镜,可明得失;以代码为镜,可通逻辑!</h3>
           <p></p>
           <button @click="signUpMode = !signUpMode" class="btn transparent">
             登录
           </button>
         </div>
-        <img src="~@images/register.svg" class="image" alt="" />
+        <img src="@/assets/images/register.svg" class="image" alt="" />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { ref } from "vue";
-import { loginUser, registerUser } from "./dataValidators";
-import LoginForm from "../../components/Login/index.vue";
-import RegisterForm from "../../components/Register/index.vue";
+import { ref } from "vue"
+import { loginUser, registerUser } from "./dataValidators"
+import LoginForm from "../../components/Login/index.vue"
+import RegisterForm from "../../components/Register/index.vue"
 export default {
   name: "LoginRegister",
   components: { LoginForm, RegisterForm },
   setup() {
-    const signUpMode = ref<boolean>(false);
+    const signUpMode = ref<boolean>(false)
     return {
       signUpMode,
       loginUser,
       registerUser
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .container {
@@ -344,7 +344,4 @@ form.sign-up-form {
   border-radius: 5px;
   box-shadow: 0px 5px 10px #cccc;
 }
-.submit_btn {
-  width: 100%;
-}</style
->>
+</style>
