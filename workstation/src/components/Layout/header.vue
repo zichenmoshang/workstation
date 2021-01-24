@@ -50,6 +50,5 @@ export default {
 .el-dropdown-link {
   cursor: pointer;
   font-size: large;
-  /* color: #409eff; */
 }
 </style>

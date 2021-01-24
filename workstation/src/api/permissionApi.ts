@@ -13,8 +13,8 @@ class Permission extends baseService {
    */
   getPermission(params: any) {
     return this.getReq({
-      url: "/permission/:userId",
-      params
+      url: "/permission/permissionInfo",
+      params: params
     })
   }
 }

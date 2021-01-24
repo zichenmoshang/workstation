@@ -1,9 +1,15 @@
 <template>
-  <div>main</div>
+  <el-main>
+    <router-view />
+  </el-main>
 </template>
 <script>
 export default {
   name: "Main"
-};
+}
 </script>
-<style scoped></style>
+<style scoped>
+.el-main {
+  background-color: #ffffff;
+}
+</style>

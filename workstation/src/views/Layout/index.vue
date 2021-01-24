@@ -1,9 +1,9 @@
 <template>
   <el-container class="layout">
     <Aside />
-    <el-container>
+    <el-container class="layoutRight">
       <Header />
-      <el-main><Main /></el-main>
+      <Main />
     </el-container>
   </el-container>
 </template>
@@ -33,6 +33,11 @@ export default {
 
 <style>
 .layout {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+.layoutRight {
+  display: flex;
+  flex-direction: column;
 }
 </style>

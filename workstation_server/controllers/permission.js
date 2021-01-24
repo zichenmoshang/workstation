@@ -5,8 +5,7 @@ const reback = require("../utils/reback");
 
 class permission {
   static async permissionUserId(ctx) {
-    console.log('-------------', ctx);
-    const { userId } = ctx.request.body;
+    const { userId } = ctx.query;
     // 验证用户是否存在
     const userinfo = await User.findOne({
       where: {
@@ -16,14 +15,41 @@ class permission {
     if (!userinfo) {
       return (ctx.body = reback.re(-1, []));
     }
-    userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
-      .utcOffset(8)
-      .format("YYYY-MM-DD HH:mm:ss");
-    userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
-      .utcOffset(8)
-      .format("YYYY-MM-DD HH:mm:ss");
-    delete userinfo.dataValues.user_password;
-    ctx.body = reback.re(1, userinfo);
+    const userPermission = userinfo.user_permission.split(",");
+    const permissions = await Permission.findAll({
+      where: {
+        permission_id: userPermission,
+      },
+      order: [["id", "ASC"]],
+      raw: true,
+    });
+    let permission = [];
+    for (let index in permissions) {
+      permissions[index].createdAt = moment(permissions[index].createdAt)
+        .utcOffset(8)
+        .format("YYYY-MM-DD HH:mm:ss");
+      permissions[index].updatedAt = moment(permissions[index].updatedAt)
+        .utcOffset(8)
+        .format("YYYY-MM-DD HH:mm:ss");
+      if (permissions[index].permission_level === 0) {
+        permission.push(permissions[index]);
+      }
+    }
+    for (let index in permission) {
+      for (let indey in permissions) {
+        if (
+          permissions[indey].permission_parent ===
+          permission[index].permission_id * 1
+        ) {
+          permission[index].children = permission[index].children
+            ? permission[index].children
+            : [];
+          permission[index].children.push(permissions[indey]);
+        }
+      }
+    }
+    console.log("-------------", permission);
+    ctx.body = reback.re(1, permission);
   }
   static async list(ctx) {
     const permissions = await Permission.findAll({
