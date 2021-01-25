@@ -6,8 +6,8 @@
 <script>
 export default {
   name: "Error404",
-  components: {},
-};
+  components: {}
+}
 </script>
 <style scoped>
 .not-found {
@@ -18,5 +18,5 @@ export default {
 .not-found img {
   width: 100%;
   height: 100%;
-}
-</style>>
+}</style
+>>

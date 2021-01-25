@@ -1,32 +1,50 @@
 <template>
   <Table :tableHeader="tableHeader" :tableData="tableData" />
 </template>
-<script>
+<script lang="ts">
 import Table from "../../components/Table/index.vue"
+import { TableHeader } from "../../components/Table/validators"
+import PermissionApi from "../../api/permissionApi"
 export default {
   name: "",
   components: { Table },
   setup() {
-    const tableHeader = [
+    const tableHeader: TableHeader = [
       {
         type: "index",
         label: "序号",
-        width: "50"
+        prop: null,
+        width: "50",
+        fixed: "left",
+        sortable: false,
+        align: "center"
       },
       {
-        prop: "date",
+        type: null,
         label: "日期",
-        width: "180"
+        prop: "date",
+        width: null,
+        fixed: "left",
+        sortable: false,
+        align: "center"
       },
       {
-        prop: "name",
+        type: null,
         label: "姓名",
-        width: "180"
+        prop: "name",
+        width: null,
+        fixed: "left",
+        sortable: false,
+        align: "center"
       },
       {
-        prop: "address",
+        type: null,
         label: "地址",
-        width: "180"
+        prop: "address",
+        width: null,
+        fixed: "left",
+        sortable: false,
+        align: "center"
       }
     ]
     const tableData = [
@@ -66,6 +84,17 @@ export default {
         address: "上海市普陀区金沙江路 1518 弄"
       }
     ]
+    const params = {
+      userId: localStorage.getItem("userId"),
+      key: ""
+    }
+    console.log("params", params)
+    PermissionApi.getUserList(params).then((res: any) => {
+      // ElMessage.success("登陆成功")
+      console.log("res")
+      console.log(res)
+      return res
+    })
     return { tableHeader, tableData }
   }
 }

@@ -19,10 +19,12 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
         })
     })
   },
-  ["USERINFO"]({ commit }, userId: string) {
+  ["USERINFO"]({ commit }, userId: any) {
     return new Promise<void>((resolve, reject) => {
       UserApi.getInfo(userId)
         .then(res => {
+          console.log("USERINFO", res)
+          console.log("res", JSON.stringify(res))
           commit("SET_USERINFO", JSON.stringify(res))
           resolve()
         })

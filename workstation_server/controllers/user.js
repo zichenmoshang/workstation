@@ -50,6 +50,7 @@ class user {
    */
   static async getinfo(ctx) {
     const { userId } = ctx.request.body;
+    console.log("getinfo",ctx.request.body)
     // 验证用户是否存在
     const userinfo = await User.findOne({
       where: {

@@ -16,6 +16,15 @@ class Permission extends baseService {
       url: "/permission/permissionInfo",
       params: params
     })
+  };
+  /**
+   * 获取某个用户的权限
+   */
+  getUserList(params: any) {
+    return this.getReq({
+      url: "/permission/getuserlist",
+      params: params
+    })
   }
 }
 

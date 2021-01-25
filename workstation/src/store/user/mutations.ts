@@ -7,7 +7,7 @@ export const mutations: MutationTree<UserStateTypes> & UserMutationsTypes = {
     localStorage.setItem("token", token)
     sessionStorage.setItem("token", token)
   },
-  ["SET_USERID"](userId: any) {
+  ["SET_USERID"](state: UserStateTypes, userId: any) {
     localStorage.setItem("userId", userId)
     sessionStorage.setItem("userId", userId)
   },

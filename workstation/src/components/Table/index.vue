@@ -3,9 +3,13 @@
     <el-table-column
       v-for="(item, i) in tableHeader"
       :key="i"
-      :prop="item.prop"
+      :type="item.type"
       :label="item.label"
+      :prop="item.prop"
       :width="item.width"
+      :fixed="item.fixed"
+      :sortable="item.sortable"
+      :align="item.align"
     ></el-table-column>
   </el-table>
 </template>

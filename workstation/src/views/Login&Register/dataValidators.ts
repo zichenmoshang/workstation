@@ -1,21 +1,21 @@
-import { ref } from "vue";
+import { ref } from "vue"
 
 interface User {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
 export const loginUser = ref<User>({
   username: "",
-  password: "",
-});
+  password: ""
+})
 
 interface RegisterUser {
-  username: string;
-  realname: string;
-  password: string;
-  unit: string;
-  department: string;
+  username: string
+  realname: string
+  password: string
+  unit: string
+  department: string
 }
 
 export const registerUser = ref<RegisterUser>({
@@ -24,4 +24,4 @@ export const registerUser = ref<RegisterUser>({
   password: "",
   unit: "",
   department: ""
-});
+})
