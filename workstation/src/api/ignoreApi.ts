@@ -7,23 +7,29 @@ export interface UserProps {
   verifyCode: string
 }
 
-class User extends baseService {
+class Ignore extends baseService {
   /**
-   * 获取用户信息
+   * 登录
    */
-  getInfo(data: any) {
+  userLogin(data: UserProps) {
     return this.postReq({
-      url: "/user/getinfo",
+      url: "/ignore/login",
       data
     })
   }
   /**
-   * 获取用户列表
+   * 注册
    */
-  getUserList(params: any) {
-    return this.getReq({
-      url: "/user/getuserlist",
-      params: params
+  register(data: any) {
+    return this.postReq({
+      url: "/ignore/register",
+      data
+    })
+  }
+
+  userLogout() {
+    return this.postReq({
+      url: "/ignore/logout"
     })
   }
 }
@@ -33,5 +39,5 @@ export default (() => {
   // if (instance) return instance
   // instance = new User()
   // return instance
-  return instance || new User()
+  return instance || new Ignore()
 })()

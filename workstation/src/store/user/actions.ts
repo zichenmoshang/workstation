@@ -2,11 +2,12 @@ import { ActionTree } from "vuex"
 import { ElMessage } from "element-plus"
 import { UserStateTypes, IRootState } from "./types"
 import UserApi from "@/api/userApi"
+import IgnoreApi from "@/api/ignoreApi"
 
 export const actions: ActionTree<UserStateTypes, IRootState> = {
   ["LOGIN"]({ commit }, userInfo: any) {
     return new Promise<void>((resolve, reject) => {
-      UserApi.userLogin(userInfo)
+      IgnoreApi.userLogin(userInfo)
         .then(res => {
           commit("SET_TOKEN", res.token)
           commit("SET_USERID", res.user_id)
@@ -33,7 +34,7 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   },
   ["REGISTER"]({ commit }, userInfo: any) {
     return new Promise<void>((resolve, reject) => {
-      UserApi.register(userInfo)
+      IgnoreApi.register(userInfo)
         .then(res => {
           commit("SET_TOKEN", res.token)
           commit("SET_USERID", res.user_id)
@@ -48,7 +49,7 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   },
   ["LOGOUT"]({ dispatch }) {
     return new Promise<void>(resolve => {
-      UserApi.userLogout().then(() => {
+      IgnoreApi.userLogout().then(() => {
         dispatch("USER_REMOVE")
         resolve()
       })

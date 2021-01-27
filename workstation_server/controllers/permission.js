@@ -48,7 +48,6 @@ class permission {
         }
       }
     }
-    console.log("-------------", permission);
     ctx.body = reback.re(1, permission);
   }
   static async list(ctx) {
@@ -91,7 +90,7 @@ class permission {
   }
   static async getUserList(ctx) {
     const { key } = ctx.query;
-    console.log(key)
+    console.log(key);
     const users = await Permission.findAll({
       where: {
         [Op.or]: [

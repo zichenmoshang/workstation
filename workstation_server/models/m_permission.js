@@ -78,11 +78,11 @@ Permission.sync({ force: true }).then(function () {
       permission_level: 0,
     },
     {
-      permission_id: 101,
+      permission_id: 110,
       permission_name: "用户列表",
       permission_icon: "iconcaidanguanli",
       permission_parent: 100,
-      permission_path: "userlist",
+      permission_path: "getuserlist",
       permission_level: 1,
     },
     {
@@ -94,7 +94,7 @@ Permission.sync({ force: true }).then(function () {
       permission_level: 0,
     },
     {
-      permission_id: 201,
+      permission_id: 210,
       permission_name: "试卷管理",
       permission_icon: "icongerenxinxi",
       permission_parent: 200,
@@ -102,13 +102,13 @@ Permission.sync({ force: true }).then(function () {
       permission_level: 1,
     },
     {
-      permission_id: 202,
+      permission_id: 220,
       permission_name: "试卷列表",
       permission_icon: "icongerenxinxi",
       permission_parent: 200,
       permission_path: "testpapers",
       permission_level: 1,
-    }
+    },
   ]);
 });
 module.exports = Permission;

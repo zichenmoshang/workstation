@@ -25,14 +25,14 @@ function checkToken(token) {
 
 class middleware {
   /**
-   *
    * 检测用户权限中间件
-   * @static
-   * @memberof middleware
    */
   static async check_authority(ctx, next) {
-    if (!ctx.originalUrl.startsWith("/user")) {
-      let userId = ctx.method == "GET" ? ctx.query.userId || ctx.params.userId : ctx.request.body.userId;
+    if (!ctx.originalUrl.startsWith("/ignore")) {
+      let userId =
+        ctx.method == "GET"
+          ? ctx.query.userId || ctx.params.userId
+          : ctx.request.body.userId;
       let user = await User.findOne({
         where: {
           user_id: userId,
@@ -40,23 +40,21 @@ class middleware {
         raw: true,
       });
       if (!user) {
-        return ctx.body = reback.re(0, "请求错误", []);
+        return (ctx.body = reback.re(0, "请求错误,没有用户", []));
       }
+      let path = ctx.originalUrl.split("?")[0].split("/")[2];
       let permission = await Permission.findOne({
         where: {
-          permission_path: ctx.request.path,
+          permission_path: path,
         },
         raw: true,
-      })
-      if (!permission) {
-        return ctx.body = reback.re(0, "请求错误", []);
-      }
-      if (user.user_permission.indexOf(permission.permission_id)) {
+      });
+      if (user.user_permission.split(",").includes(permission.permission_id)) {
         await next();
       } else {
-        return ctx.body = reback.re(-1, "你没有操作权限", []);
+        return (ctx.body = reback.re(-1, "你没有操作权限", []));
       }
-    }else{
+    } else {
       await next();
     }
   }

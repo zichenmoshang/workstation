@@ -12,23 +12,23 @@ const User = sequelize.define(
       unique: true, // 是否不可重复
       required: true, // 是否允许关联
       autoIncrement: true, // 没有这个时插入返回是id是null
-      comment: '用户id',
+      comment: "用户id",
     },
     user_username: {
       type: Sequelize.STRING(6),
       allowNull: false, // 是否允许为NULL
       unique: true,
       required: true,
-      comment: '用户警号',
+      comment: "用户警号",
     },
     user_password: {
       type: Sequelize.STRING(64),
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: '用户密码',
-      set: function(value) {
-        this.setDataValue('user_password', md5(value));
+      comment: "用户密码",
+      set: function (value) {
+        this.setDataValue("user_password", md5(value));
       },
     },
     user_realname: {
@@ -36,13 +36,13 @@ const User = sequelize.define(
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: '用户姓名',
+      comment: "用户姓名",
     },
     user_avatar: {
       type: Sequelize.STRING(256),
       allowNull: true, // 是否允许为NULL
       unique: false,
-      comment: '用户头像',
+      comment: "用户头像",
     },
     user_unit: {
       type: Sequelize.STRING(64),
@@ -50,21 +50,21 @@ const User = sequelize.define(
       defaultValue: "佳木斯公安处",
       unique: false,
       required: true,
-      comment: '用户单位',
+      comment: "用户单位",
     },
     user_department: {
       type: Sequelize.STRING(64),
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: '用户部门',
+      comment: "用户部门",
     },
     user_permission: {
       type: Sequelize.STRING(256),
       allowNull: true, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: '用户权限',
+      comment: "用户权限",
     },
   },
   {
@@ -78,17 +78,19 @@ const User = sequelize.define(
  * User.sync({ force: true }) - 将创建表,如果表已经存在,则将其首先删除
  * User.sync({ alter: true }) - 这将检查数据库中表的当前状态(它具有哪些列,它们的数据类型等),然后在表中进行必要的更改以使其与模型匹配.
  */
-User.sync({ force: true }).then(function () {
-  return User.create({
-    user_username: "admin.",
-    user_password: "123456",
-    user_realname: "超级管理员",
-    user_avatar: "",
-    user_unit: "佳木斯公安处",
-    user_department: "网络安全保卫支队",
-    user_permission: "200,201,202",
+User.sync({ force: true })
+  .then(function () {
+    return User.create({
+      user_username: "admin.",
+      user_password: "123456",
+      user_realname: "超级管理员",
+      user_avatar: "",
+      user_unit: "佳木斯公安处",
+      user_department: "网络安全保卫支队",
+      user_permission: "100,110,200,210,220",
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-}).catch((err) => {
-  console.log(err);
-});
 module.exports = User;
