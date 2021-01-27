@@ -19,14 +19,14 @@ const User = sequelize.define(
       allowNull: false, // 是否允许为NULL
       unique: true,
       required: true,
-      comment: "用户警号",
+      comment: "警号",
     },
     user_password: {
       type: Sequelize.STRING(64),
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: "用户密码",
+      comment: "登录密码",
       set: function (value) {
         this.setDataValue("user_password", md5(value));
       },
@@ -36,7 +36,7 @@ const User = sequelize.define(
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: "用户姓名",
+      comment: "真实姓名",
     },
     user_avatar: {
       type: Sequelize.STRING(256),
@@ -50,21 +50,21 @@ const User = sequelize.define(
       defaultValue: "佳木斯公安处",
       unique: false,
       required: true,
-      comment: "用户单位",
+      comment: "所在单位",
     },
     user_department: {
       type: Sequelize.STRING(64),
       allowNull: false, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: "用户部门",
+      comment: "所属部门",
     },
     user_permission: {
       type: Sequelize.STRING(256),
       allowNull: true, // 是否允许为NULL
       unique: false,
       required: true,
-      comment: "用户权限",
+      comment: "拥有权限",
     },
   },
   {

@@ -1,5 +1,6 @@
 const moment = require("moment");
 const User = require("../models/m_user");
+const Permission = require("../models/m_permission");
 const reback = require("../utils/reback");
 
 class user {
@@ -29,23 +30,34 @@ class user {
    * 获取用户列表
    */
   static async getuserlist(ctx) {
-    console.log("6666")
-    const userlist = await User.findAll({
+    const userList = await User.findAll({
       raw: true,
     });
-    if (userlist.length === 0) {
+    if (userList.length === 0) {
       return (ctx.body = reback.re(-1, []));
     }
-    for (let index in userlist) {
-      userlist[index].createdAt = moment(userlist[index].createdAt)
+    for (let index in userList) {
+      userList[index].createdAt = moment(userList[index].createdAt)
         .utcOffset(8)
         .format("YYYY-MM-DD HH:mm:ss");
-      userlist[index].updatedAt = moment(userlist[index].updatedAt)
+        userList[index].updatedAt = moment(userList[index].updatedAt)
         .utcOffset(8)
         .format("YYYY-MM-DD HH:mm:ss");
-      delete userlist[index].user_password;
+      delete userList[index].user_password;
+      const permission = userList[index].user_permission.split(",")
+      let permissionName = ""
+      for (let jndex in permission) {
+        const permissionInfo = await Permission.findOne({
+          where: {
+            permission_id: permission[jndex] * 1
+          },
+          raw: true,
+        });
+        permissionName = permissionName === "" ? permissionInfo.permission_name : permissionName + ", " + permissionInfo.permission_name
+      }
+      userList[index].user_permission = permissionName
     }
-    ctx.body = reback.re(1, userlist);
+    ctx.body = reback.re(1, userList);
   }
 }
 

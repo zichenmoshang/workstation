@@ -22,7 +22,8 @@ module.exports = {
   rules: {
     "no-console": "off",
     "no-debugger": "off",
-    "@typescript-eslint/no-explicit-any": ["off"]
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "camelcase": ["error", {"allow": ["aa_bb"]}]
   },
 
   extends: [

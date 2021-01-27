@@ -7,6 +7,7 @@ export interface TableHeaderItem {
   width: string | null // 对应列的宽度
   fixed: string | null // 列是否固定在 left 左侧或者 right 右侧
   sortable: boolean | null // 对应列是否可以排序
+  resizable: boolean // 对应列是否可以通过拖动改变宽度（需要在 el-table 上设置 border 属性为真）
   align: string | null // 对齐方式 left/center/right
 }
 

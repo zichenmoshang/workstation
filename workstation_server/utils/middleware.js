@@ -28,7 +28,9 @@ class middleware {
    * 检测用户权限中间件
    */
   static async check_authority(ctx, next) {
-    if (!ctx.originalUrl.startsWith("/ignore")) {
+    if (ctx.originalUrl.startsWith("/ignore")) {
+      await next();
+    } else {
       let userId =
         ctx.method == "GET"
           ? ctx.query.userId || ctx.params.userId
@@ -49,13 +51,17 @@ class middleware {
         },
         raw: true,
       });
-      if (user.user_permission.split(",").includes(permission.permission_id)) {
+      if (permission === null) {
         await next();
       } else {
-        return (ctx.body = reback.re(-1, "你没有操作权限", []));
+        if (
+          user.user_permission.split(",").includes(permission.permission_id)
+        ) {
+          await next();
+        } else {
+          return (ctx.body = reback.re(-1, "你没有操作权限", []));
+        }
       }
-    } else {
-      await next();
     }
   }
 }

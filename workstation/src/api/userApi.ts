@@ -1,4 +1,5 @@
 import baseService from "@/utils/baseService"
+import axios from "@/utils/axios"
 
 export interface UserProps {
   username: string
@@ -21,8 +22,13 @@ class User extends baseService {
    * 获取用户列表
    */
   getUserList(params: any) {
-    return this.getReq({
-      url: "/user/getuserlist",
+    // return this.getReq({
+    //   url: "/user/getuserlist",
+    //   params: params
+    // })
+    return axios("/user/getuserlist", {
+      method: "get",
+      responseType: "json",
       params: params
     })
   }

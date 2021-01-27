@@ -1,58 +1,31 @@
 <template>
-  <Table :tableHeader="tableHeader" :tableData="tableData" />
+  <div class="userList">
+    <Search />
+    <Table :tableHeader="tableHeader" :tableData="tableData.data" />
+  </div>
 </template>
 <script lang="ts">
+import { reactive } from "vue"
+import Search from "../../components/Search/index.vue"
 import Table from "../../components/Table/index.vue"
 import { tableHeader } from "./dataValidators"
 import UserApi from "../../api/userApi"
 export default {
   name: "",
-  components: { Table },
+  components: { Search, Table },
   setup() {
-    const tableData = [
-      {
-        date: "2016-05-03",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-02",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-04",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-01",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-08",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-06",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      },
-      {
-        date: "2016-05-07",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄"
-      }
-    ]
     const params = {
       userId: localStorage.getItem("userId"),
       key: ""
     }
-    const dat = UserApi.getUserList(params)
-    console.log(dat)
-    return { tableHeader, tableData, dat }
+    const tableData = reactive({ data: [] })
+    function getUserList() {
+      UserApi.getUserList(params).then((res: any) => {
+        tableData.data = res.data
+      })
+    }
+    getUserList()
+    return { tableHeader, tableData }
   }
 }
 </script>

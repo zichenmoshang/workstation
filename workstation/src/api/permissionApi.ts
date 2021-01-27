@@ -9,14 +9,23 @@ import baseService from "@/utils/baseService"
 
 class Permission extends baseService {
   /**
-   * 获取某个用户的权限
+   * 根据权限id获取权限信息
    */
-  getPermission(params: any) {
+  getPermissionFromId(params: any) {
+    return this.getReq({
+      url: "/permission/getpermissionfromid",
+      params: params
+    })
+  }
+  /**
+   * 根据用户id获取权限信息
+   */
+  getPermissionFromUser(params: any) {
     return this.getReq({
       url: "/permission/permissionInfo",
       params: params
     })
-  };
+  }
 }
 
 let instance

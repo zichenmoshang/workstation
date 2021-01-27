@@ -1,6 +1,6 @@
 const moment = require("moment");
-const Permission = require("../models/m_permission");
 const User = require("../models/m_user");
+const Permission = require("../models/m_permission");
 const reback = require("../utils/reback");
 
 class permission {
@@ -11,6 +11,7 @@ class permission {
       where: {
         user_id: userId,
       },
+      raw: true,
     });
     if (!userinfo) {
       return (ctx.body = reback.re(-1, []));
@@ -50,6 +51,29 @@ class permission {
     }
     ctx.body = reback.re(1, permission);
   }
+
+  static async getPermissionFromId(ctx) {
+    const { permissionId } = ctx.query;
+    // 验证用户是否存在
+    const permission = await Permission.findOne({
+      where: {
+        permission_id: permissionId,
+      },
+      order: [["id", "ASC"]],
+      raw: true,
+    });
+    if (!permission) {
+      return (ctx.body = reback.re(-1, []));
+    }
+    permission.createdAt = moment(permission.createdAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
+    permission.updatedAt = moment(permission.updatedAt)
+      .utcOffset(8)
+      .format("YYYY-MM-DD HH:mm:ss");
+    ctx.body = reback.re(1, permission);
+  }
+
   static async list(ctx) {
     const permissions = await Permission.findAll({
       where: {
@@ -90,7 +114,6 @@ class permission {
   }
   static async getUserList(ctx) {
     const { key } = ctx.query;
-    console.log(key);
     const users = await Permission.findAll({
       where: {
         [Op.or]: [

@@ -9,33 +9,57 @@ export const tableHeader = ref<TableHeader>([
     width: "50",
     fixed: "left",
     sortable: false,
+    resizable: true,
     align: "center"
   },
   {
     type: null,
-    label: "日期",
-    prop: "date",
-    width: null,
-    fixed: "left",
+    label: "警号",
+    prop: "user_username",
+    width: "180",
+    fixed: null,
     sortable: false,
+    resizable: false,
     align: "center"
   },
   {
     type: null,
-    label: "姓名",
-    prop: "name",
-    width: null,
-    fixed: "left",
+    label: "真实姓名",
+    prop: "user_realname",
+    width: "180",
+    fixed: null,
     sortable: false,
+    resizable: false,
     align: "center"
   },
   {
     type: null,
-    label: "地址",
-    prop: "address",
-    width: null,
-    fixed: "left",
+    label: "所在单位",
+    prop: "user_unit",
+    width: "180",
+    fixed: null,
     sortable: false,
+    resizable: false,
+    align: "center"
+  },
+  {
+    type: null,
+    label: "所属部门",
+    prop: "user_department",
+    width: "180",
+    fixed: null,
+    sortable: false,
+    resizable: false,
+    align: "center"
+  },
+  {
+    type: null,
+    label: "用户权限",
+    prop: "user_permission",
+    width: null,
+    fixed: null,
+    sortable: false,
+    resizable: false,
     align: "center"
   }
 ])

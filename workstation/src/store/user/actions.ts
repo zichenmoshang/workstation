@@ -24,8 +24,6 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
     return new Promise<void>((resolve, reject) => {
       UserApi.getUserInfo(userId)
         .then(res => {
-          console.log("USERINFO", res)
-          console.log("res", JSON.stringify(res))
           commit("SET_USERINFO", JSON.stringify(res))
           resolve()
         })
