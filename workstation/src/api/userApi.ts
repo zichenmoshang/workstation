@@ -11,9 +11,9 @@ class User extends baseService {
   /**
    * 获取用户信息
    */
-  getInfo(data: any) {
+  getUserInfo(data: any) {
     return this.postReq({
-      url: "/user/getinfo",
+      url: "/user/getuserinfo",
       data
     })
   }

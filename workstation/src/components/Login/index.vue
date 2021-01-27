@@ -47,12 +47,6 @@ export default {
     const router = useRouter()
     const handleLogin = async () => {
       await store.dispatch("LOGIN", props.loginUser)
-      console.log(sessionStorage.getItem("userId"))
-      const data = {
-        token: sessionStorage.getItem("token"),
-        userId: sessionStorage.getItem("userId")
-      }
-      await store.dispatch("USERINFO", data)
       await router.push("/")
     }
     return { loginuser, handleLogin }

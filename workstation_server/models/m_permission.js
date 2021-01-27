@@ -86,6 +86,14 @@ Permission.sync({ force: true }).then(function () {
       permission_level: 1,
     },
     {
+      permission_id: 111,
+      permission_name: "用户信息",
+      permission_icon: "iconcaidanguanli",
+      permission_parent: 110,
+      permission_path: "getuserinfo",
+      permission_level: 2,
+    },
+    {
       permission_id: 200,
       permission_name: "在线答题",
       permission_icon: "icongerenxinxi",

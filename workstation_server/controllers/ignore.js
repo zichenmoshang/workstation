@@ -15,26 +15,27 @@ class ignore {
       where: {
         user_username: username,
       },
+      raw: true,
     });
     if (!userinfo) {
       return (ctx.body = reback.re(-1, "用户名不存在", []));
     }
-    userinfo.dataValues.createdAt = moment(userinfo.dataValues.createdAt)
+    userinfo.createdAt = moment(userinfo.createdAt)
       .utcOffset(8)
       .format("YYYY-MM-DD HH:mm:ss");
-    userinfo.dataValues.updatedAt = moment(userinfo.dataValues.updatedAt)
+    userinfo.updatedAt = moment(userinfo.updatedAt)
       .utcOffset(8)
       .format("YYYY-MM-DD HH:mm:ss");
     // 验证密码 && 生成token并下发
     if (md5(password) === userinfo.user_password) {
-      delete userinfo.dataValues.user_password;
+      delete userinfo.user_password;
       let data = {
         token: "",
-        user_id: userinfo.dataValues.user_id,
+        userinfo: userinfo,
       };
       data.token = jwt.sign(
         {
-          id: userinfo.dataValues.user_id,
+          id: userinfo.user_id,
           // 设置 token 过期时间
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
         },

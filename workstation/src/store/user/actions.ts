@@ -10,7 +10,7 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
       IgnoreApi.userLogin(userInfo)
         .then(res => {
           commit("SET_TOKEN", res.token)
-          commit("SET_USERID", res.user_id)
+          commit("SET_USERINFO", JSON.stringify(res.userinfo))
           ElMessage.success("登陆成功")
           resolve()
         })
@@ -22,7 +22,7 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   },
   ["USERINFO"]({ commit }, userId: any) {
     return new Promise<void>((resolve, reject) => {
-      UserApi.getInfo(userId)
+      UserApi.getUserInfo(userId)
         .then(res => {
           console.log("USERINFO", res)
           console.log("res", JSON.stringify(res))
