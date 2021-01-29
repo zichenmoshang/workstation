@@ -2,23 +2,18 @@ import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
   {
-    path: "/login",
-    name: "Login",
-    component: () => import("@/views/Login&Register/index.vue")
-  },
-  {
     path: "/",
     name: "Layout",
-    meat: {
+    meta: {
       title: "首页",
-      icon: "el-icon-apple"
+      icon: "el-icon-star-off"
     },
     component: () => import("@/views/Layout/index.vue")
   },
   {
     path: "/manager",
     name: "Manager",
-    meat: {
+    meta: {
       title: "管理中心",
       icon: "el-icon-setting"
     },
@@ -27,7 +22,7 @@ const routes = [
       {
         path: "userlist",
         name: "UserList",
-        meat: {
+        meta: {
           title: "用户列表",
           icon: "el-icon-user"
         },
@@ -38,31 +33,57 @@ const routes = [
   {
     path: "/onlinetest",
     name: "OnlineTest",
-    meat: {
-      title: "在线答题"
+    meta: {
+      title: "在线答题",
+      icon: "el-icon-user"
     },
     component: () => import("@/views/OnlineTest/index.vue"),
     children: [
       {
         path: "/testpapermanager",
         name: "TestpaperManager",
-        meat: {
-          title: "试卷管理"
+        meta: {
+          title: "试卷管理",
+          icon: "el-icon-user"
         },
         component: () => import("@/views/OnlineTest/testpaperManager.vue")
       }
     ]
   },
   {
+    path: "/login",
+    name: "Login",
+    hidden: true,
+    meta: {
+      title: "登录",
+      icon: "el-icon-key"
+    },
+    component: () => import("@/views/Login&Register/index.vue")
+  },
+  {
     path: "/:catchAll(.*)",
     name: "/404",
+    hidden: true,
+    meta: {
+      title: "错误",
+      icon: "el-icon-warning-outline"
+    },
     component: () => import("@/views/Error404/index.vue")
   }
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
+const isAuthenticated = function(): boolean {
+  if (localStorage.getItem("token") || sessionStorage.getItem("token"))
+    return true
+  return false
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== "Login" && !isAuthenticated) next({ name: "Login" })
+  else next()
+})
 export default router

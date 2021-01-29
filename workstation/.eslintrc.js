@@ -23,7 +23,9 @@ module.exports = {
     "no-console": "off",
     "no-debugger": "off",
     "@typescript-eslint/no-explicit-any": ["off"],
-    "camelcase": ["error", {"allow": ["aa_bb"]}]
+    camelcase: "off",
+    "@typescript-eslint/camelcase": 0
+    // "camelcase": ["error", {"allow": ["aa_bb"]}]
   },
 
   extends: [

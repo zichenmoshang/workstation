@@ -38,11 +38,11 @@ const User = sequelize.define(
       required: true,
       comment: "真实姓名",
     },
-    user_avatar: {
-      type: Sequelize.STRING(256),
-      allowNull: true, // 是否允许为NULL
+    user_isActive: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false, // 是否允许为NULL
       unique: false,
-      comment: "用户头像",
+      comment: "用户是否激活",
     },
     user_unit: {
       type: Sequelize.STRING(64),
@@ -84,7 +84,7 @@ User.sync({ force: true })
       user_username: "admin.",
       user_password: "123456",
       user_realname: "超级管理员",
-      user_avatar: "",
+      user_isActive: true,
       user_unit: "佳木斯公安处",
       user_department: "网络安全保卫支队",
       user_permission: "100,110,200,210,220",

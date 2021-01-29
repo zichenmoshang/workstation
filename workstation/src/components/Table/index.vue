@@ -10,7 +10,8 @@
       :fixed="item.fixed"
       :sortable="item.sortable"
       :align="item.align"
-    ></el-table-column>
+    >
+    </el-table-column>
   </el-table>
 </template>
 <script>

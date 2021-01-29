@@ -3,26 +3,60 @@
     <div class="logo">
       <span>Work-Station</span>
     </div>
-    <el-menu background-color="#e9eef3">
-      <el-submenu index="1">
-        <template #title><i class="el-icon-message"></i>导航一</template>
-        <el-submenu index="1-4">
-          <template #title>选项4</template>
-          <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+    <el-menu background-color="#e9eef3" router @open="handleOpen">
+      <template v-for="Item in routers">
+        <el-menu-item
+          v-if="!Item.children && !Item.hidden"
+          :key="Item.path"
+          :index="Item.path"
+        >
+          <template #title>
+            <i :class="Item.meta.icon"></i>
+            {{ Item.meta.title }}
+          </template>
+        </el-menu-item>
+        <el-submenu
+          v-else-if="!Item.hidden"
+          :key="Item.path"
+          :index="Item.path"
+        >
+          <template #title>
+            <i :class="Item.meta.icon"></i>
+            {{ Item.meta.title }}
+          </template>
+          <el-menu-item
+            v-for="item in Item.children"
+            :key="item.path"
+            :index="Item.path + '/' + item.path"
+          >
+            <i :class="item.meta.icon"></i>
+            {{ item.meta.title }}
+          </el-menu-item>
         </el-submenu>
-      </el-submenu>
+      </template>
     </el-menu>
   </el-aside>
 </template>
 <script>
+import { reactive } from "vue"
 import { useRouter } from "vue-router"
 export default {
   name: "Aside",
   setup() {
     const { options } = useRouter()
-    console.log(options)
+    const routers = options.routes
+    const data = reactive({
+      selectedKey: ["2"],
+      openKey: ["sub1"]
+    })
+    console.log(routers)
+    const handleOpen = async (key, keyPath) => {
+      console.log(key, keyPath)
+    }
     return {
-      options
+      routers,
+      data,
+      handleOpen
     }
   }
 }
@@ -37,5 +71,8 @@ export default {
   font-weight: bold;
   font-size: x-large;
   color: #409eff;
+}
+#text {
+  font-size: 14px;
 }
 </style>

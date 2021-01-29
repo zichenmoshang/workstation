@@ -12,6 +12,7 @@ import Aside from "@/components/Layout/aside.vue"
 import Header from "@/components/Layout/header.vue"
 import Main from "@/components/Layout/main.vue"
 import { reactive, toRefs } from "vue"
+import { useRouter } from "vue-router"
 export default {
   name: "Layout",
   components: {
@@ -24,7 +25,14 @@ export default {
       selectedKeys: ["1"],
       collapsed: false
     })
+    const isLogin = () => {
+      if (!localStorage.getItem("token")) {
+        return useRouter().push("login")
+      }
+    }
+    isLogin()
     return {
+      isLogin,
       ...toRefs(data)
     }
   }
