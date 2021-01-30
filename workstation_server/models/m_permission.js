@@ -71,10 +71,10 @@ Permission.sync({ force: true }).then(function () {
   return Permission.bulkCreate([
     {
       permission_id: 100,
-      permission_name: "用户管理",
+      permission_name: "管理中心",
       permission_icon: "iconbaobiaofenxi",
       permission_parent: 0,
-      permission_path: null,
+      permission_path: "manager",
       permission_level: 0,
     },
     {
@@ -82,7 +82,7 @@ Permission.sync({ force: true }).then(function () {
       permission_name: "用户列表",
       permission_icon: "iconcaidanguanli",
       permission_parent: 100,
-      permission_path: "getuserlist",
+      permission_path: "userlist",
       permission_level: 1,
     },
     {
@@ -90,7 +90,7 @@ Permission.sync({ force: true }).then(function () {
       permission_name: "用户信息",
       permission_icon: "iconcaidanguanli",
       permission_parent: 110,
-      permission_path: "getuserinfo",
+      permission_path: "userinfo",
       permission_level: 2,
     },
     {

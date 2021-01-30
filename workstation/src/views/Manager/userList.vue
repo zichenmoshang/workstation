@@ -20,8 +20,8 @@ export default {
   name: "",
   components: { Search, ButtonGroup, Table, Pagination },
   setup() {
-    const storage: any = localStorage.getItem("userInfo")
-      ? localStorage.getItem("userInfo")
+    const storage: any = sessionStorage.getItem("userInfo")
+      ? sessionStorage.getItem("userInfo")
       : ""
     const params = {
       userId: storage !== "" ? JSON.parse(storage).user_id : "",

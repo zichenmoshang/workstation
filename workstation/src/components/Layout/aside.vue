@@ -33,6 +33,7 @@
             {{ item.meta.title }}
           </el-menu-item>
         </el-submenu>
+        <!-- <Menu v-else :menu="Item" :key="Item.path" /> -->
       </template>
     </el-menu>
   </el-aside>
@@ -40,16 +41,38 @@
 <script>
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
+import { store } from "../../store/index"
+// import Menu from "../../components/Menu/index.vue"
 export default {
   name: "Aside",
+  // components: {
+  //   Menu
+  // },
   setup() {
     const { options } = useRouter()
     const routers = options.routes
+    const userId = JSON.parse(sessionStorage.getItem("userInfo")).user_id
+    const getUserInfo = async () => {
+      await store.dispatch("USERINFO", { userId })
+    }
+    getUserInfo()
+    const permission = sessionStorage.getItem("userInfo")
+      ? JSON.parse(sessionStorage.getItem("userInfo")).user_permission.split(
+          ","
+        )
+      : []
+    for (const index in routers) {
+      if (
+        routers[index].path != "/" &&
+        !permission.includes(routers[index].meta.title)
+      ) {
+        routers[index].hidden = true
+      }
+    }
     const data = reactive({
       selectedKey: ["2"],
       openKey: ["sub1"]
     })
-    console.log(routers)
     const handleOpen = async (key, keyPath) => {
       console.log(key, keyPath)
     }

@@ -1,15 +1,10 @@
-interface UserInfo {
-  realname: string | null
-  userId: string | null
-}
-
 export interface IRootState {
   user: UserStateTypes
 }
 
 export type UserStateTypes = {
   token?: string | null
-  userInfo: UserInfo
+  userInfo?: string | null
 }
 
 export type UserMutationsTypes<S = UserStateTypes> = {

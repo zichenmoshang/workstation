@@ -31,6 +31,7 @@ class middleware {
     if (ctx.originalUrl.startsWith("/ignore")) {
       await next();
     } else {
+      // console.log("middleware,ctx", ctx)
       let userId =
         ctx.method == "GET"
           ? ctx.query.userId || ctx.params.userId

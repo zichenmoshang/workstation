@@ -26,7 +26,7 @@ export default {
       collapsed: false
     })
     const isLogin = () => {
-      if (!localStorage.getItem("token")) {
+      if (!localStorage.getItem("token") && !sessionStorage.getItem("token")) {
         return useRouter().push("login")
       }
     }

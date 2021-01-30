@@ -20,8 +20,8 @@ import { ElMessage } from "element-plus"
 export default {
   name: "Header",
   setup() {
-    const realname = localStorage.getItem("userInfo")
-      ? JSON.parse(localStorage.getItem("userInfo")).user_realname
+    const realname = sessionStorage.getItem("userInfo")
+      ? JSON.parse(sessionStorage.getItem("userInfo")).user_realname
       : ""
     const handleSelect = key => {
       // console.log(`Click on item ${key}, ${keyPath}`)

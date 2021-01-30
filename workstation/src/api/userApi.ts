@@ -12,10 +12,15 @@ class User extends baseService {
   /**
    * 获取用户信息
    */
-  getUserInfo(data: any) {
-    return this.postReq({
-      url: "/user/getuserinfo",
-      data
+  getUserInfo(params: any) {
+    // return this.postReq({
+    //   url: "/user/getuserinfo",
+    //   data
+    // })
+    return axios("/user/getuserinfo", {
+      method: "get",
+      responseType: "json",
+      params: params
     })
   }
   /**
