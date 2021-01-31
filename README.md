@@ -22,7 +22,7 @@
 | 03.1 | 布局模块之侧边区域 | "@/components/Layout/aside.vue" |  | √ |
 | 03.2 | 布局模块之头部区域 | "@/components/Layout/header.vue" |  | √ |
 | 03.3 | 布局模块之展示区域 | "@/components/Layout/main.vue" |  | √ |
-| 04 | 按钮模块 | "@/components/Button/index.vue" | "@/components/Button/type.ts" | 0 |
+| 04 | 按钮模块 | "@/components/Button/index.vue" | "@/components/Button/type.ts" | √ |
 | 05 | 按钮组模块 | "@/components/ButtonGroup/index.vue" | "@/components/ButtonGroup/type.ts" | 50% |
 | 06 | 搜索栏模块 | "@/components/Search/index.vue" |  | 50% |
 | 07 | 表格模块 | "@/components/Table/index.vue" | "@/components/Table/type.ts" | √ |
