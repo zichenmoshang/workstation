@@ -1,7 +1,8 @@
 import { ref } from "vue"
-import { Button } from "../../components/ButtonGroup/validators"
-import { TableHeader } from "../../components/Table/validators"
-import { Pagination } from "../../components/Pagination/validators"
+import { Button } from "../../components/ButtonGroup/type"
+import { TableHeader } from "../../components/Table/type"
+import { Pagination } from "../../components/Pagination/type"
+
 export const tableHeader = ref<TableHeader>([
   {
     type: "selection",
