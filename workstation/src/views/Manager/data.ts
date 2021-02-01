@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import { Button } from "../../components/ButtonGroup/type"
+import { ButtonGroup } from "../../components/Button/type"
 import { TableHeader } from "../../components/Table/type"
 import { Pagination } from "../../components/Pagination/type"
 
@@ -28,7 +28,7 @@ export const tableHeader = ref<TableHeader>([
     type: null,
     label: "警号",
     prop: "user_username",
-    width: "180",
+    width: "120",
     fixed: null,
     sortable: false,
     resizable: false,
@@ -38,7 +38,17 @@ export const tableHeader = ref<TableHeader>([
     type: null,
     label: "真实姓名",
     prop: "user_realname",
-    width: "180",
+    width: "120",
+    fixed: null,
+    sortable: false,
+    resizable: false,
+    align: "center"
+  },
+  {
+    type: null,
+    label: "密码",
+    prop: "user_password",
+    width: "300",
     fixed: null,
     sortable: false,
     resizable: false,
@@ -86,10 +96,10 @@ export const tableHeader = ref<TableHeader>([
   }
 ])
 
-export const buttonRroup = ref<Button>([
+export const buttonRroup = ref<ButtonGroup>([
   {
-    type: "success",
     size: "medium",
+    type: "success",
     plain: true,
     round: true,
     circle: false,
@@ -97,11 +107,12 @@ export const buttonRroup = ref<Button>([
     disabled: false,
     icon: "el-icon-open",
     autofocus: false,
+    nativeType: "button",
     label: "激活用户"
   },
   {
-    type: "warning",
     size: "medium",
+    type: "warning",
     plain: true,
     round: true,
     circle: false,
@@ -109,11 +120,12 @@ export const buttonRroup = ref<Button>([
     disabled: false,
     icon: "el-icon-refresh",
     autofocus: false,
+    nativeType: "button",
     label: "重置密码"
   },
   {
-    type: "danger",
     size: "medium",
+    type: "danger",
     plain: true,
     round: true,
     circle: false,
@@ -121,22 +133,23 @@ export const buttonRroup = ref<Button>([
     disabled: false,
     icon: "el-icon-delete",
     autofocus: false,
+    nativeType: "button",
     label: "禁用用户"
   }
 ])
 
-export const pagination = ref<Pagination>({
+export const pagination: Pagination = {
   small: false,
   background: true,
-  pageSize: 10,
-  total: 100,
-  pageCount: 100,
-  pagerCount: 5,
+  pageSize: 0,
+  total: 0,
+  pageCount: 0,
+  pagerCount: 0,
   currentPage: 1,
-  layout: "sizes, prev, pager, next, jumper, ->, total, slot",
+  layout: "total, sizes, prev, pager, next, jumper",
   pageSizes: [10, 20, 30, 50, 100],
   prevText: "上一页",
   nextText: "下一页",
   disabled: false,
-  hideOnSinglPage: false
-})
+  hideOnSinglPage: true
+}

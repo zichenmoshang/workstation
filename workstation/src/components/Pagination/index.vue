@@ -1,29 +1,36 @@
 <template>
   <el-pagination
-    :small="Pagination.small"
-    :background="Pagination.background"
-    :page-size="Pagination.pageSize"
-    :total="Pagination.total"
-    :page-count="Pagination.pageCount"
-    :pager-count="Pagination.pagerCount"
-    :current-page="Pagination.currentPage"
-    :layout="Pagination.layout"
-    :page-sizes="Pagination.pageSizes"
-    :prev-text="Pagination.prevText"
-    :next-text="Pagination.nextText"
-    :disabled="Pagination.disabled"
-    :hide-on-singl-page="Pagination.hideOnSinglPage"
+    :small="pagination.small"
+    :background="pagination.background"
+    :page-size="pagination.pageSize"
+    :total="pagination.total"
+    :page-count="pagination.pageCount"
+    :pager-count="pagination.pagerCount"
+    :current-page="pagination.currentPage"
+    :layout="pagination.layout"
+    :page-sizes="pagination.pageSizes"
+    :prev-text="pagination.prevText"
+    :next-text="pagination.nextText"
+    :disabled="pagination.disabled"
+    :hide-on-singl-page="pagination.hideOnSinglPage"
+    @size-change="sizeChange"
   >
   </el-pagination>
 </template>
 <script>
+import { inject } from "vue"
 export default {
-  name: "",
-  props: {
-    Pagination: {}
-  },
+  name: "Pagination",
+  // props: {
+  //   pagination: {}
+  // },
   setup() {
-    return {}
+    const pagination = inject("paginationData")
+    console.log(pagination)
+    function sizeChange(value) {
+      // this.props.pagination.pageSize = value
+    }
+    return { pagination, sizeChange }
   }
 }
 </script>

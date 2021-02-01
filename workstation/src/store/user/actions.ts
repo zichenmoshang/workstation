@@ -8,9 +8,9 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   ["LOGIN"]({ commit }, userInfo: any) {
     return new Promise<void>((resolve, reject) => {
       IgnoreApi.userLogin(userInfo)
-        .then(res => {
-          commit("SET_TOKEN", res.token)
-          commit("SET_USERINFO", JSON.stringify(res.userinfo))
+        .then((res: any) => {
+          commit("SET_TOKEN", res.data.token)
+          commit("SET_USERINFO", JSON.stringify(res.data.userinfo))
           ElMessage.success("登陆成功")
           resolve()
         })
@@ -23,8 +23,8 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   ["USERINFO"]({ commit }, userId: any) {
     return new Promise<void>((resolve, reject) => {
       UserApi.getUserInfo(userId)
-        .then(res => {
-          commit("SET_USERINFO", JSON.stringify(res))
+        .then((res: any) => {
+          commit("SET_USERINFO", JSON.stringify(res.data.userinfo))
           resolve()
         })
         .catch(e => reject(e))
@@ -33,7 +33,7 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   ["REGISTER"]({ commit }, userInfo: any) {
     return new Promise<void>((resolve, reject) => {
       IgnoreApi.register(userInfo)
-        .then(res => {
+        .then((res: any) => {
           commit("SET_TOKEN", res.token)
           commit("SET_USERID", res.user_id)
           ElMessage.success("注册成功")
@@ -47,10 +47,10 @@ export const actions: ActionTree<UserStateTypes, IRootState> = {
   },
   ["LOGOUT"]({ dispatch }) {
     return new Promise<void>(resolve => {
-      IgnoreApi.userLogout().then(() => {
-        dispatch("USER_REMOVE")
-        resolve()
-      })
+      // IgnoreApi.userLogout().then(() => {
+      dispatch("USER_REMOVE")
+      resolve()
+      // })
     })
   },
   ["USER_REMOVE"]({ commit }) {

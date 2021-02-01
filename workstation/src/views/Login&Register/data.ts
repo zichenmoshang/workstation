@@ -7,8 +7,6 @@ export const loginUser = ref<LoginUser>({
   password: ""
 })
 
-
-
 export const registerUser = ref<RegisterUser>({
   username: "",
   realname: "",

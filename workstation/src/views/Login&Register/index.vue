@@ -36,7 +36,7 @@
 </template>
 <script lang="ts">
 import { ref } from "vue"
-import { loginUser, registerUser } from "./dataValidators"
+import { loginUser, registerUser } from "./data"
 import LoginForm from "../../components/Login/index.vue"
 import RegisterForm from "../../components/Register/index.vue"
 export default {

@@ -76,14 +76,12 @@ const router = createRouter({
   routes
 })
 
-const isAuthenticated = function(): boolean {
-  if (localStorage.getItem("token") || sessionStorage.getItem("token"))
-    return true
-  return false
-}
-
 router.beforeEach((to, from, next) => {
-  if (to.name !== "Login" && !isAuthenticated) next({ name: "Login" })
-  else next()
+  const token = sessionStorage.getItem("token")
+  if (!token && to.path != "/login") {
+    next({ path: "/login" })
+  } else {
+    next()
+  }
 })
 export default router

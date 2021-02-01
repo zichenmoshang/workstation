@@ -5,16 +5,16 @@
       ><el-col :span="6"> <ButtonGroup :buttonRroup="buttonRroup"/></el-col>
     </el-row>
     <Table :tableHeader="tableHeader" :tableData="tableData.data" />
-    <Pagination :Pagination="pagination" />
+    <Pagination :pagination="pagination" />
   </div>
 </template>
 <script lang="ts">
-import { reactive } from "vue"
+import { provide, reactive } from "vue"
 import Search from "../../components/Search/index.vue"
-import ButtonGroup from "../../components/ButtonGroup/index.vue"
+import ButtonGroup from "../../components/Button/ButtonGroup.vue"
 import Table from "../../components/Table/index.vue"
 import Pagination from "../../components/Pagination/index.vue"
-import { tableHeader, buttonRroup, pagination } from "./dataValidators"
+import { tableHeader, buttonRroup, pagination } from "./data"
 import UserApi from "../../api/userApi"
 export default {
   name: "",
@@ -35,10 +35,19 @@ export default {
           else item.user_isActive = "未激活"
         }
         tableData.data = res.data
+        // pagination.total = tableData.data.length
+        // pagination.pageCount = tableData.data.length
       })
     }
     getUserList()
-    // pagination.total = tableData.data.length
+    console.log(">>>", pagination)
+    const paginationData = reactive({
+      pagination
+    })
+    paginationData.pagination.total = tableData.data.length
+    paginationData.pagination.pageCount = tableData.data.length
+    console.log("<<<", paginationData.pagination)
+    provide("paginationData", paginationData.pagination)
     return { tableHeader, buttonRroup, pagination, tableData }
   }
 }

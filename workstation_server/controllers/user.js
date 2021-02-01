@@ -13,7 +13,7 @@ class user {
       where: {
         user_id: userId,
       },
-      raw: true
+      raw: true,
     });
     if (!userinfo) {
       return (ctx.body = reback.re(-1, []));
@@ -25,7 +25,7 @@ class user {
     userinfo.updatedAt = moment(userinfo.updatedAt)
       .utcOffset(8)
       .format("YYYY-MM-DD HH:mm:ss");
-      // 删除密码
+    // 删除密码
     delete userinfo.user_password;
     // 格式化权限
     const permission = userinfo.user_permission.split(",");
@@ -43,7 +43,7 @@ class user {
           : permissionName + ", " + permissionInfo.permission_name;
     }
     userinfo.user_permission = permissionName;
-    ctx.body = reback.re(1, userinfo);
+    ctx.body = reback.re(1, { userinfo });
   }
   /**
    * 获取用户列表
@@ -56,13 +56,14 @@ class user {
       return (ctx.body = reback.re(-1, []));
     }
     for (let index in userList) {
+      // 格式化时间
       userList[index].createdAt = moment(userList[index].createdAt)
         .utcOffset(8)
         .format("YYYY-MM-DD HH:mm:ss");
       userList[index].updatedAt = moment(userList[index].updatedAt)
         .utcOffset(8)
         .format("YYYY-MM-DD HH:mm:ss");
-      delete userList[index].user_password;
+      // 格式化权限
       const permission = userList[index].user_permission.split(",");
       let permissionName = "";
       for (let jndex in permission) {
